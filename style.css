@@ -1,0 +1,522 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('fonts/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('fonts/Montserrat-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+:root {
+  --accent: #FF7115;
+  --gray-bg: #f2f2f2;
+  --dark: #1a1a1a;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  /* font-family: 'Arial', sans-serif; */
+  background: var(--gray-bg);
+  color: #333;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 0;
+}
+
+/* --- HERO / HEADER --- */
+.hero {
+  padding: 20px 20px;
+}
+
+.dark-hero {
+  background: var(--dark);
+  color: white;
+}
+
+.hero-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.logo,
+.enlarged-logo {
+  width: 130px;
+  height: auto;
+}
+
+.hero-text {
+  flex-grow: 1;
+  max-width: 600px;
+}
+
+.hero-text h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+.hero-text p {
+  font-size: 1.0em;
+  margin: 0 auto;
+  color: white;
+  text-align: center;
+}
+
+/* --- HERO BUTTON --- */
+.cta-btn {
+  display: inline-block;
+  margin-top: 20px;
+  background: var(--accent);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: background 0.3s;
+}
+
+.cta-btn:hover {
+  background: #d85e12;
+}
+
+.hero-btn {
+  margin-top: 0;
+  white-space: nowrap;
+  align-self: center;
+}
+
+/* --- NAVIGATION --- */
+.navigation {
+  background: var(--dark); /* тот же цвет, что у шапки */
+  text-align: center;
+  padding: 4px 0; /* уменьшили высоту */
+  border-bottom: 1px solid #333;
+}
+
+.navigation a {
+  display: inline-block;
+  margin: 3px 8px;
+  padding: 6px 14px;
+  border: 2px solid white;
+  border-radius: 30px;
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.9em;
+}
+
+.navigation a:hover {
+  background: var(--accent); /* оранжевый */
+  border-color: var(--accent);
+  color: white;
+}
+
+
+/* --- Carousel --- */
+
+.carousel-section {
+  position: relative;
+  overflow: hidden;
+  background: transparent; /* убираем черный фон */
+}
+
+.carousel {
+  position: relative;
+  max-height: 400px;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  position: relative;
+  min-width: 100%;
+  height: 400px;
+  overflow: hidden;
+  display: none;
+}
+
+.slide.active {
+  display: block;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(40%);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.carousel-text {
+  max-width: 700px;
+  padding: 20px;
+}
+
+.carousel-text h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.carousel-text p {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+}
+
+.outline-btn {
+  margin-top: 15px;
+  display: inline-block;
+  padding: 10px 25px;
+  border: 2px solid white;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.outline-btn:hover {
+  background: white;
+  color: var(--dark);
+}
+
+/* Arrows */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  font-size: 30px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.3s;
+}
+
+.prev:hover, .next:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+/* Dots */
+.dots {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 4;
+  padding: 10px 0;
+  background: transparent; /* или просто удали строку background */
+}
+
+.dot {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 0 6px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+.dot.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+
+
+
+
+/* --- SECTION BLOCKS --- */
+.section {
+  background: var(--white);
+  padding: 60px 20px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.alt-bg {
+  background: #eaeaea;
+}
+
+h2 {
+  color: var(--accent);
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+p {
+  margin-bottom: 20px;
+}
+
+/* --- CARDS --- */
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  flex: 1 1 calc(33% - 20px);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  min-width: 280px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card h3 {
+  margin: 15px 0 5px;
+  color: var(--dark);
+}
+
+.card p {
+  padding: 0 15px 20px;
+  font-size: 0.95em;
+  color: #555;
+}
+
+/* --- FEATURES LIST --- */
+.features {
+  list-style: none;
+  padding: 0;
+}
+
+.features li {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+/* --- BRAND LIST --- */
+.brand-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.brand {
+  background: #fff;
+  border: 2px solid var(--accent);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+/* --- CONTACT --- */
+
+.contact-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contact-text {
+  flex: 1 1 55%;
+}
+
+.contact-text h2 {
+  margin-bottom: 20px;
+}
+
+.contact-text p {
+  margin-bottom: 12px;
+  font-size: 1em;
+}
+
+.contact-text .subtext {
+  /* font-style: italic; */
+  color: #444;
+  margin-top: 30px;
+}
+
+.qr-code {
+  flex: 1 1 30%;
+  text-align: center;
+}
+
+.qr-code img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+
+/* --- FOOTER --- */
+.footer {
+  background: var(--dark);
+  color: #ccc;
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 0.95em;
+}
+
+
+
+/* ====================== МОБИЛЬНАЯ ВЕРСИЯ ====================== */
+@media (max-width: 768px) {
+
+  .hero-flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .logo,
+  .enlarged-logo {
+    width: 100px;
+  }
+
+  .hero-text p {
+    font-size: 1em;
+    padding: 0 10px;
+  }
+
+  .cta-btn.hero-btn {
+    margin: 10px auto 0;
+    font-size: 1em;
+    padding: 12px 24px;
+    width: auto;
+  }
+
+  .navigation a {
+    display: block;
+    margin: 12px auto; /* увеличен отступ между элементами */
+    width: 85%;        /* уменьшили ширину кнопки */
+    font-size: 1em;
+    padding: 14px 20px;
+    border-width: 2px;
+  }
+
+  .carousel-text h2 {
+    font-size: 1.5em;
+  }
+
+  .carousel-text p {
+    font-size: 1em;
+  }
+
+  .carousel-text {
+    padding: 10px;
+  }
+
+  .prev,
+  .next {
+    display: none;
+  }
+
+  .card-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 90%;
+    min-width: unset;
+  }
+
+  .contact-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .qr-code img {
+    width: 140px;
+    height: 140px;
+  }
+
+  .brand-grid {
+    gap: 8px;
+  }
+
+  .brand {
+    font-size: 0.9em;
+    padding: 8px 16px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    margin: 0 4px;
+  }
+
+  h2 {
+    font-size: 1.6em;
+  }
+
+  .container {
+    padding: 20px 0;
+  }
+
+}
