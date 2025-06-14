@@ -530,4 +530,8 @@ p {
     padding: 20px 0;
   }
 
+  a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 }
