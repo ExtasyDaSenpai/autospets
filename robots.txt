@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://autospets88.ru/sitemap.xml
