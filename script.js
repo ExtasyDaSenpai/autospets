@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+
+  const logo = document.querySelector(".logo");
+  if (logo && !logo.closest("a")) {
+    const link = document.createElement("a");
+    link.href = "/";
+    link.appendChild(logo.cloneNode(true));
+    logo.replaceWith(link);
+  }
+
   // --- Анимация секций при прокрутке ---
   const sections = document.querySelectorAll(".section");
 
