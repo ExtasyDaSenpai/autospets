@@ -100,3 +100,42 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
+
+// --- Мобильная оптимизация ---
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+// Убираем стрелки на мобильных (если они не скрыты в CSS)
+if (isMobile()) {
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+  if (prevBtn) prevBtn.style.display = "none";
+  if (nextBtn) nextBtn.style.display = "none";
+}
+
+// Добавляем свайп-контроль на мобильных
+let touchStartX = 0;
+let touchEndX = 0;
+
+function handleGesture() {
+  if (touchEndX < touchStartX - 50) {
+    nextSlide();
+    resetAutoSlide();
+  }
+  if (touchEndX > touchStartX + 50) {
+    index = (index - 1 + slides.length) % slides.length;
+    showSlide(index);
+    resetAutoSlide();
+  }
+}
+
+document.querySelector(".slides").addEventListener("touchstart", (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+
+document.querySelector(".slides").addEventListener("touchend", (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleGesture();
+});
