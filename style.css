@@ -8,6 +8,14 @@
 
 @font-face {
   font-family: 'Montserrat';
+  src: url('fonts/Montserrat-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
   src: url('fonts/Montserrat-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
@@ -360,10 +368,26 @@ p {
   padding: 0;
 }
 
+.parts-description {
+  font-size: 1.2em;
+  line-height: 1.7;
+  text-align: justify;
+  padding-bottom: 10px;
+}
+
+.parts-description-second {
+  font-size: 1.2em;
+  line-height: 1.7;
+  text-align: justify;
+  font-style: italic;
+  padding-top: 20px;
+}
+
 .features li {
   margin: 10px 0;
-  font-size: 1.1em;
+  font-size: 1.2em;
 }
+
 
 /* --- BRAND LIST --- */
 .brand-grid {
@@ -400,14 +424,20 @@ p {
 }
 
 .contact-text p {
+  /* margin-bottom: 12px; */
   margin-bottom: 12px;
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 .contact-text .subtext {
   /* font-style: italic; */
   color: #444;
-  margin-top: 30px;
+  margin-top: 50px;
+}
+
+.what {
+  padding-top: 20px;
+  font-style: italic;
 }
 
 .qr-code {
@@ -532,6 +562,31 @@ p {
 
   a {
   -webkit-tap-highlight-color: transparent;
+}
+
+.parts-description {
+  font-size: 1em;
+  line-height: 1.7;
+  text-align: justify;
+  padding-bottom: 10px;
+}
+
+.parts-description-second {
+  font-size: 1em;
+  line-height: 1.7;
+  text-align: justify;
+  font-style: italic;
+  padding-top: 20px;
+}
+
+.features li {
+  margin: 10px 0;
+  font-size: 1em;
+}
+
+.contact-text p {
+  margin-bottom: 12px;
+  font-size: 1em;
 }
 
 }
