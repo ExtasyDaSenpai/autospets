@@ -1,4 +1,7 @@
 User-agent: *
-Disallow:
-
+Disallow: /admin/
+Disallow: /bin/
+Disallow: /search/
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content
 Sitemap: https://autospets88.ru/sitemap.xml
