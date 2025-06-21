@@ -193,7 +193,7 @@ h1, h2, h3 {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: brightness(40%);
+  filter: brightness(30%); /* было 40 */
 }
 
 .overlay {
