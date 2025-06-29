@@ -1,227 +1,137 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-
-  const logo = document.querySelector(".logo");
-  if (logo && !logo.closest("a")) {
-    const link = document.createElement("a");
-    link.href = "/";
-    link.appendChild(logo.cloneNode(true));
-    logo.replaceWith(link);
+document.addEventListener('DOMContentLoaded', () => {
+  /* ------------------------------------------------------------------
+     0. Логотип → ссылка на главную
+  ------------------------------------------------------------------ */
+  const logo = document.querySelector('.logo');
+  if (logo && !logo.closest('a')) {
+    const a = document.createElement('a');
+    a.href = '/';
+    a.appendChild(logo.cloneNode(true));
+    logo.replaceWith(a);
   }
 
-  // --- Анимация секций при прокрутке ---
-  const sections = document.querySelectorAll(".section");
+  /* ------------------------------------------------------------------
+     1. Анимация появления секций при прокрутке
+  ------------------------------------------------------------------ */
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    },
+    { threshold: 0.1 }
+  );
+  sections.forEach((sec) => observer.observe(sec));
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
+  /* ------------------------------------------------------------------
+     2. Карусель
+  ------------------------------------------------------------------ */
+  const slides = document.querySelectorAll('.slide');
+  const dots   = document.querySelectorAll('.dot');
+  let index    = 0;
+  let timer;
+
+  const showSlide = (n) => {
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === n);
+      dots[i].classList.toggle('active', i === n);
     });
-  }, {
-    threshold: 0.1
-  });
+  };
 
-  sections.forEach(section => {
-    observer.observe(section);
-  });
-
-  // --- Карусель с автопрокруткой ---
-  const slides = document.querySelectorAll(".slide");
-  const dots = document.querySelectorAll(".dot");
-  let index = 0;
-  let interval;
-
-  function showSlide(n) {
-    slides.forEach((slide, i) => {
-      slide.classList.remove("active");
-      dots[i].classList.remove("active");
-    });
-    slides[n].classList.add("active");
-    dots[n].classList.add("active");
-  }
-
-  function nextSlide() {
+  const nextSlide = () => {
     index = (index + 1) % slides.length;
     showSlide(index);
-  }
+  };
 
-  function startAutoSlide() {
-    interval = setInterval(nextSlide, 7700);
-  }
+  const startAuto = () => (timer = setInterval(nextSlide, 7700));
+  const resetAuto = () => {
+    clearInterval(timer);
+    startAuto();
+  };
 
-  function resetAutoSlide() {
-    clearInterval(interval);
-    startAutoSlide();
-  }
-
+  /* → запускаем карусель */
   showSlide(index);
-  startAutoSlide();
+  startAuto();
 
-  document.querySelector(".next").addEventListener("click", () => {
+  /* стрелки */
+  document.querySelector('.next').addEventListener('click', () => {
     nextSlide();
-    resetAutoSlide();
+    resetAuto();
   });
-
-  document.querySelector(".prev").addEventListener("click", () => {
+  document.querySelector('.prev').addEventListener('click', () => {
     index = (index - 1 + slides.length) % slides.length;
     showSlide(index);
-    resetAutoSlide();
+    resetAuto();
   });
 
-  dots.forEach((dot, i) => {
-    dot.addEventListener("click", () => {
+  /* точки */
+  dots.forEach((d, i) =>
+    d.addEventListener('click', () => {
       index = i;
       showSlide(index);
-      resetAutoSlide();
-    });
-  });
+      resetAuto();
+    })
+  );
 
-  // --- Плавная прокрутка без # в адресе ---
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
+  /* ------------------------------------------------------------------
+     3. Плавная прокрутка без «#» в адресной строке
+  ------------------------------------------------------------------ */
+  document.querySelectorAll('a[href^="#"]').forEach((link) =>
     link.addEventListener('click', (e) => {
       e.preventDefault();
+      const id = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
 
-      const targetId = link.getAttribute('href').substring(1);
-      const section = document.getElementById(targetId);
+      const startY = window.scrollY;
+      const endY   = target.offsetTop - 20;
+      const dur    = 700;
+      const t0     = performance.now();
 
-      if (section) {
-        const targetOffset = section.offsetTop;
-        const scrollSpeed = 700; // 💡 Настрой скорость здесь (в мс)
+      const animate = (t) => {
+        const p = Math.min((t - t0) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        window.scrollTo(0, startY + (endY - startY) * ease);
+        if (p < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    })
+  );
 
-        const start = window.scrollY;
-        const startTime = performance.now();
+  /* ------------------------------------------------------------------
+     4. Свайпы для мобильных / тач-экранов
+  ------------------------------------------------------------------ */
+  const swipeZone = document.querySelector('.slides');   // используем всю область слайдов
+  if (swipeZone) {
+    let startX = 0;
+    let deltaX = 0;
+    const TH = 50;                                      // длина жеста, px
 
-        function animateScroll(currentTime) {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / scrollSpeed, 1);
-          const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+    swipeZone.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
 
-          window.scrollTo(0, start + (targetOffset - start - 20) * ease);
+    swipeZone.addEventListener('touchmove', (e) => {
+      deltaX = e.touches[0].clientX - startX;
+    }, { passive: true });
 
-          if (progress < 1) {
-            requestAnimationFrame(animateScroll);
-          }
-        }
-
-        requestAnimationFrame(animateScroll);
+    swipeZone.addEventListener('touchend', () => {
+      if (Math.abs(deltaX) > TH) {
+        deltaX < 0 ? nextSlide() : (() => {               // влево / вправо
+          index = (index - 1 + slides.length) % slides.length;
+          showSlide(index);
+        })();
+        resetAuto();
       }
-    });
-  });
-
-  (() => {
-  const wrapper = document.querySelector(".slides");
-  if (!wrapper) return;            // защита, если элемент не найден
-
-  let startX = 0;                  // точка начала касания
-  let diffX  = 0;                  // смещение пальца
-
-  // 1. Запоминаем, где пользователь коснулся экрана
-  wrapper.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-  }, { passive: true });
-
-  // 2. Считаем смещение (нужно, чтобы игнорировать короткие «тычки»)
-  wrapper.addEventListener("touchmove", (e) => {
-    diffX = e.touches[0].clientX - startX;
-  }, { passive: true });
-
-  // 3. По окончании касания определяем жест
-  wrapper.addEventListener("touchend", () => {
-    const SWIPE_THRESHOLD = 50;    // минимальная длина свайпа (px)
-
-    if (Math.abs(diffX) > SWIPE_THRESHOLD) {
-      if (diffX < 0) {             // свайп влево  → следующий слайд
-        nextSlide();
-      } else {                     // свайп вправо → предыдущий слайд
-        index = (index - 1 + slides.length) % slides.length;
-        showSlide(index);
-      }
-      resetAutoSlide();            // перезапуск авто-прокрутки
-    }
-
-    // сбрасываем значения
-    startX = diffX = 0;
-  });
-})();
-
-
-});
-
-
-
-// --- Мобильная оптимизация ---
-function isMobile() {
-  return window.innerWidth <= 768;
-}
-
-// Убираем стрелки на мобильных (если они не скрыты в CSS)
-if (isMobile()) {
-  const prevBtn = document.querySelector(".prev");
-  const nextBtn = document.querySelector(".next");
-  if (prevBtn) prevBtn.style.display = "none";
-  if (nextBtn) nextBtn.style.display = "none";
-}
-
-// Добавляем свайп-контроль на мобильных
-let touchStartX = 0;
-let touchEndX = 0;
-
-function handleGesture() {
-  if (touchEndX < touchStartX - 50) {
-    nextSlide();
-    resetAutoSlide();
+      startX = deltaX = 0;
+    }, { passive: true });
   }
-  if (touchEndX > touchStartX + 50) {
-    index = (index - 1 + slides.length) % slides.length;
-    showSlide(index);
-    resetAutoSlide();
+
+  /* ------------------------------------------------------------------
+     5. Прячем стрелки на мобильных (можно заменить CSS-медиа-правилом)
+  ------------------------------------------------------------------ */
+  if (window.innerWidth <= 768) {
+    document.querySelectorAll('.prev, .next').forEach(el => el.style.display = 'none');
   }
-}
-
-document.querySelector(".slides").addEventListener("touchstart", (e) => {
-  touchStartX = e.changedTouches[0].screenX;
 });
-
-document.querySelector(".slides").addEventListener("touchend", (e) => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleGesture();
-});
-
-
-/* === Свайпы для мобильных/тач-устройств === */
-(() => {
-  const wrapper = document.querySelector(".slides");
-  if (!wrapper) return;            // защита, если элемент не найден
-
-  let startX = 0;                  // точка начала касания
-  let diffX  = 0;                  // смещение пальца
-
-  // 1. Запоминаем, где пользователь коснулся экрана
-  wrapper.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-  }, { passive: true });
-
-  // 2. Считаем смещение (нужно, чтобы игнорировать короткие «тычки»)
-  wrapper.addEventListener("touchmove", (e) => {
-    diffX = e.touches[0].clientX - startX;
-  }, { passive: true });
-
-  // 3. По окончании касания определяем жест
-  wrapper.addEventListener("touchend", () => {
-    const SWIPE_THRESHOLD = 50;    // минимальная длина свайпа (px)
-
-    if (Math.abs(diffX) > SWIPE_THRESHOLD) {
-      if (diffX < 0) {             // свайп влево  → следующий слайд
-        nextSlide();
-      } else {                     // свайп вправо → предыдущий слайд
-        index = (index - 1 + slides.length) % slides.length;
-        showSlide(index);
-      }
-      resetAutoSlide();            // перезапуск авто-прокрутки
-    }
-
-    // сбрасываем значения
-    startX = diffX = 0;
-  });
-})();
