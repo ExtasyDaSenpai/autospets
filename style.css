@@ -401,31 +401,84 @@ p {
   color: #555;
 }
 
-/* --- FEATURES LIST --- */
-.features {
-  list-style: none;
-  padding: 0;
+/* =======  НОВЫЙ блок Автозапчасти  ======= */
+.parts-section { background: #f2f2f2; }
+
+.parts-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: center;
 }
 
-.parts-description {
-  font-size: 1.2em;
-  line-height: 1.7;
-  text-align: justify;
-  padding-bottom: 10px;
+/* левая колонка */
+
+.parts-intro{
+  display:flex;              /* складываем в колонку   */
+  flex-direction:column;
+  justify-content:center;    /* центр по вертикали     */
 }
 
-.parts-description-second {
-  font-size: 1.2em;
-  line-height: 1.7;
-  text-align: justify;
-  font-style: italic;
-  padding-top: 20px;
+.parts-info { flex: 1 1 340px; }
+
+.parts-info h2 { color: var(--accent); margin-bottom: 20px; }
+.parts-info p { font-size: 1.1em; margin-bottom: 15px; }
+.parts-info .note { font-style: italic; color: #555; }
+
+.parts-info p:first-of-type{
+  text-align: justify;          /* растягиваем строки */
+  max-width: none;              /* снимаем ограничение 700px */
 }
 
-.features li {
-  margin: 10px 0;
-  font-size: 1.2em;
+/* кнопка внутри секции */
+.parts-btn { margin-top: 10px; }
+.parts-section .parts-btn{             /*  <a class="cta-btn parts-btn">… */
+  display:block;                       /* превращаем в «блок»            */
+  width:max-content;                   /* ширина по контенту             */
+  margin:24px auto;                    /* …и центрируем                  */
 }
+
+.parts-btn{
+  align-self:center;         /* <<< по горизонтали по центру intro-колонки */
+  margin-top:3.5rem;         /* <<< опустить ниже текста (подберите значение) */
+}
+
+/* правая колонка — сетка карточек */
+.parts-cards {
+  flex: 1 1 460px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
+  flex-wrap: wrap;          /* перенос строк */
+  gap: 28px;                /* расстояние между картами */
+  justify-content: center;
+}
+
+.part-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  transition: transform .25s;
+  flex: 1 1 240px;          /* 240 px – минимальная ширина; 
+                               при необходимости растянется */
+  max-width: 260px;         /* чтобы не раздувались на широких экранах */
+}
+
+.part-card:hover { transform: translateY(-6px); }
+
+.part-card .icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.part-card h3 { font-size: 1.15em; margin-bottom: 6px; color: var(--dark); }
+.part-card p  { font-size: .95em; color: #555; }
+
+
 
 
 /* --- BRAND LIST --- */
@@ -445,7 +498,7 @@ p {
 }
 
 /* --- CONTACT --- */
-
+#contact { background: #f2f2f2; }
 .contact-flex {
   display: flex;
   flex-wrap: wrap;
@@ -533,11 +586,13 @@ p {
   .navigation a {
     display: block;
     margin: 12px auto; /* увеличен отступ между элементами */
-    width: 85%;        /* уменьшили ширину кнопки */
+    width: 65%;        /* уменьшили ширину кнопки */
     font-size: 1em;
     padding: 14px 20px;
     border-width: 2px;
+    max-width: 260px;
   }
+
 
   .carousel-text h2 {
     font-size: 1.5em;
@@ -603,25 +658,24 @@ p {
   -webkit-tap-highlight-color: transparent;
 }
 
-.parts-description {
-  font-size: 1em;
-  line-height: 1.7;
-  text-align: justify;
-  padding-bottom: 10px;
-}
 
-.parts-description-second {
-  font-size: 1em;
-  line-height: 1.7;
-  text-align: justify;
-  font-style: italic;
-  padding-top: 20px;
-}
 
-.features li {
-  margin: 10px 0;
-  font-size: 1em;
-}
+  .parts-flex   { flex-direction: column; }
+  .parts-cards  { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .part-card{
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+  .parts-btn{
+    display: inline-block;
+    margin: 20px auto;          /* ➜ по центру */
+    margin-top:2rem;
+  }
+  .parts-section .parts-btn{
+    margin:20px auto;                  /* чуть меньше вертикальный отступ */
+  }
+
+
 
 .contact-text p {
   margin-bottom: 12px;
