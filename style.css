@@ -1,3 +1,4 @@
+/*
 @font-face {
   font-family: 'Montserrat';
   src: url('fonts/Montserrat-Regular.ttf') format('truetype');
@@ -21,6 +22,7 @@
   font-style: normal;
   font-display: swap;
 }
+*/
 
 
 :root {
@@ -37,7 +39,7 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 400;
   /* font-family: 'Arial', sans-serif; */
   background: var(--gray-bg);
@@ -74,6 +76,8 @@ h1, h2, h3 {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 30px;
+
+  padding: 20px 0;
 }
 
 .logo,
@@ -111,7 +115,14 @@ h1, h2, h3 {
   border-radius: 10px;
   text-decoration: none;
   font-size: 1.1em;
+  font-weight: bold;
   transition: background 0.3s;
+
+
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(255, 113, 21, 0.4);
+  transition: background 0.3s ease, transform 0.2s ease;
+  animation: pulse 2s infinite;
 }
 
 .cta-btn:hover {
@@ -133,7 +144,7 @@ h1, h2, h3 {
 }
 
 .navigation .container {
-  margin-top: 20px;
+  margin-top: 1px;
   padding-top: 0;
 }
 
@@ -159,6 +170,7 @@ h1, h2, h3 {
 
 
 /* --- Carousel --- */
+/* --- Carousel --- */
 
 .carousel-section {
   position: relative;
@@ -168,7 +180,7 @@ h1, h2, h3 {
 
 .carousel {
   position: relative;
-  max-height: 400px;
+  max-height: 500px;
 }
 
 .slides {
@@ -179,7 +191,7 @@ h1, h2, h3 {
 .slide {
   position: relative;
   min-width: 100%;
-  height: 400px;
+  height: 500px;
   overflow: hidden;
   display: none;
 }
@@ -193,7 +205,7 @@ h1, h2, h3 {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: brightness(30%); /* было 40 */
+  filter: brightness(20%); /* было 40 */
 }
 
 .overlay {
@@ -204,41 +216,68 @@ h1, h2, h3 {
   height: 100%;
   color: white;
   display: flex;
+  flex-direction: column;       /* добавлено */
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding: 40px 20px;           /* немного отступов сверху/сбоку */
 }
+
 
 .carousel-text {
   max-width: 700px;
   padding: 20px;
+  min-height: 300px; /* Добавлено: высота под контент + кнопку */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 120px;
 }
+
 
 .carousel-text h2 {
   font-size: 2em;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
 .carousel-text p {
-  font-size: 1.1em;
-  margin-bottom: 10px;
+  font-size: 1.2em;
+  margin-bottom: 25px; /* 👈 увеличенный отступ от текста до кнопки */
 }
 
-.outline-btn {
-  margin-top: 15px;
+.orange-btn {
+  position: absolute;
+  left: 50%;
+  bottom:60px;
+  margin: 0;
+  transform:translateX(-50%);
   display: inline-block;
-  padding: 10px 25px;
-  border: 2px solid white;
-  border-radius: 8px;
+  width: auto;                      /* <--- Это ключевой момент */
+  padding: 12px 30px;
+  margin-top: 15px;
+  margin-bottom: 50px;
+  background: var(--accent);
   color: white;
+  font-weight: bold;
+  font-size: 1.1em;
+  border-radius: 8px;
   text-decoration: none;
-  transition: background 0.3s;
+  box-shadow: 0 4px 12px rgba(255, 113, 21, 0.4);
+  transition: background 0.3s ease, transform 0.2s ease;
+  animation: pulse 2s infinite;
+  max-width: 300px;
+  
 }
 
-.outline-btn:hover {
-  background: white;
-  color: var(--dark);
+
+
+.orange-btn:hover {
+  background: #e85f00;
+  transform:translate(-50%,-2px);
 }
+
 
 /* Arrows */
 .prev, .next {
