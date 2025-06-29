@@ -108,6 +108,44 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  (() => {
+  const wrapper = document.querySelector(".slides");
+  if (!wrapper) return;            // защита, если элемент не найден
+
+  let startX = 0;                  // точка начала касания
+  let diffX  = 0;                  // смещение пальца
+
+  // 1. Запоминаем, где пользователь коснулся экрана
+  wrapper.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+
+  // 2. Считаем смещение (нужно, чтобы игнорировать короткие «тычки»)
+  wrapper.addEventListener("touchmove", (e) => {
+    diffX = e.touches[0].clientX - startX;
+  }, { passive: true });
+
+  // 3. По окончании касания определяем жест
+  wrapper.addEventListener("touchend", () => {
+    const SWIPE_THRESHOLD = 50;    // минимальная длина свайпа (px)
+
+    if (Math.abs(diffX) > SWIPE_THRESHOLD) {
+      if (diffX < 0) {             // свайп влево  → следующий слайд
+        nextSlide();
+      } else {                     // свайп вправо → предыдущий слайд
+        index = (index - 1 + slides.length) % slides.length;
+        showSlide(index);
+      }
+      resetAutoSlide();            // перезапуск авто-прокрутки
+    }
+
+    // сбрасываем значения
+    startX = diffX = 0;
+  });
+})();
+
+
 });
 
 
