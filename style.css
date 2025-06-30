@@ -742,26 +742,31 @@ p {
   .navigation.navigation--open{ transform:translateY(0); }
 }
 
+
+
+
 /* ========== СТРЕЛКА-УКАЗАТЕЛЬ (mobile) ========== */
 @media (max-width:768px){
 
   .scroll-down{
-    display:inline-flex;   
+    display:inline-flex;
     position:relative;
-    width:36px; height:44px;          /* ↑ чуть выше, чтобы влез длинный "хвост" */
+    width:36px; height:44px;
     margin-left:14px;
     background:transparent;
     border:none; outline:none;
     cursor:pointer;
-    animation:arrowFlash 2.2s infinite;
+
+    /* ▼ две анимации одновременно */
+    animation: arrowFlash 2.2s infinite,   /* свечение */
+              arrowMove  1.6s infinite;    /* вертикальный ход */
   }
 
   /* треугольник */
   .scroll-down::before{
     content:'';
     position:absolute;
-    top:10px;                         /* ↓ расстояние от вершины "хвоста" */
-    left:50%;
+    top:10px; left:50%;
     border-left:10px solid transparent;
     border-right:10px solid transparent;
     border-top:14px solid var(--accent);
@@ -772,16 +777,23 @@ p {
   .scroll-down::after{
     content:'';
     position:absolute;
-    top:0;
-    left:50%;
-    width:3.5px; height:22px;         /* ← Длина хвоста */
+    top:0; left:50%;
+    width:3.5px; height:22px;
     background:var(--accent);
     transform:translateX(-50%);
     border-radius:1.75px;
   }
 
+  /* свечение */
   @keyframes arrowFlash{
-    0%,100%{filter:drop-shadow(0 0 0 rgba(255,113,21,0));}
-    50%   {filter:drop-shadow(0 0 6px rgba(255,113,21,.7));}
+    0%,100%{ filter:drop-shadow(0 0 0 rgba(255,113,21,0)); }
+    50%    { filter:drop-shadow(0 0 6px rgba(255,113,21,.7)); }
+  }
+
+  /* лёгкое движение вверх-вниз */
+  @keyframes arrowMove{
+    0%,100%{ transform:translateY(0); }
+    50%    { transform:translateY(12px); }  /* глубина хода — 6 px */
   }
 }
+
