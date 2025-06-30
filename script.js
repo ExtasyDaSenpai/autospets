@@ -134,4 +134,73 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.innerWidth <= 768) {
     document.querySelectorAll('.prev, .next').forEach(el => el.style.display = 'none');
   }
+
+
+  
+
+  /* ------------------------------------------------------------------
+     6. Лого-прилипалка
+  ------------------------------------------------------------------ */
+
+  (function () {
+  const MOBILE_MAX = 768;
+  if (window.innerWidth > MOBILE_MAX) return;      // только мобильные
+
+  /* ── создаём панель с логотипом + бургер ──────────*/
+  const logo = document.querySelector('.logo');
+  if (!logo) return;
+
+  const bar = document.createElement('div');
+  bar.className = 'sticky-bar';
+  bar.innerHTML = `
+      <img src="${logo.getAttribute('src')}" alt="Логотип" />
+      <div class="burger"><span></span><span></span><span></span></div>
+  `;
+  document.body.appendChild(bar);
+
+  const burger = bar.querySelector('.burger');
+  const nav    = document.querySelector('.navigation');
+  const serviceTop = document.getElementById('service').offsetTop;
+
+  /* 1. Показываем / скрываем панель при скролле */
+  window.addEventListener('scroll', () => {
+    bar.classList.toggle('sticky-bar--visible',
+                         window.scrollY >= serviceTop);
+  }, { passive:true });
+
+  /* 2. Клик по панели → вверх страницы */
+  bar.querySelector('img').addEventListener('click', () => {
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  /* 3. Клик по бургеру открывает / закрывает меню  */
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('burger--active');
+    nav.classList.toggle('navigation--open');
+  });
+
+  /* 4. Закрываем меню после выбора ссылки */
+  nav.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click',()=>{
+      burger.classList.remove('burger--active');
+      nav.classList.remove('navigation--open');
+    });
+  });
+})();
+
+
+
+const arrowBtn   = document.getElementById('scrollDown');
+  const serviceSec = document.getElementById('service');
+
+  if (arrowBtn && serviceSec){
+    arrowBtn.addEventListener('click', () => {
+      serviceSec.scrollIntoView({ behavior:'smooth' });
+    });
+  }
+
+
+
+
+
 });

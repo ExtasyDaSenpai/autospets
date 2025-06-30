@@ -554,7 +554,7 @@ p {
   font-size: 0.95em;
 }
 
-
+.scroll-down{ display:none; }
 
 /* ====================== МОБИЛЬНАЯ ВЕРСИЯ ====================== */
 @media (max-width: 768px) {
@@ -682,4 +682,106 @@ p {
   font-size: 1em;
 }
 
+}
+
+
+
+
+/*────────  МОБИЛЬНАЯ ЛИПКАЯ ПАНЕЛЬ + БУРГЕР ────────*/
+@media (max-width:768px){
+
+
+  #service h2{           /* или #service { … }  — как во 2-м варианте */
+    margin-top: 50px;
+  }
+
+  .cta-btn.hero-btn{
+      margin: 10px auto 20px;
+  }
+
+  /* сам «бар» */
+  .sticky-bar{
+    position:fixed; top:0; left:0;
+    width:100%; height:66px;
+    background:var(--dark);
+    display:flex; align-items:center;
+    justify-content:space-between;
+    padding:0 16px;
+    transform:translateY(-100%);
+    transition:transform .25s;
+    z-index:1000;
+  }
+  .sticky-bar--visible{ transform:translateY(0); }
+
+  /* логотип внутри */
+  .sticky-bar img{ width:90px; height:auto; }
+
+  /* бургер-кнопка */
+  .burger{ width:28px; height:22px; display:flex;
+           flex-direction:column; justify-content:space-between;
+           cursor:pointer; }
+  .burger span{ display:block; width:100%; height:3px;
+                background:#fff; border-radius:2px;
+                transition:transform .3s,opacity .3s; }
+
+  /* анимация креста */
+  .burger--active span:nth-child(1){
+      transform:translateY(9px) rotate(45deg);}
+  .burger--active span:nth-child(2){ opacity:0; }
+  .burger--active span:nth-child(3){
+      transform:translateY(-9px) rotate(-45deg);}
+
+  /* выпадающее меню навигации */
+  .navigation{
+      position:fixed; top:56px; left:0; width:100%;
+      background:var(--dark);
+      transform:translateY(-110%);
+      transition:transform .3s;
+      z-index:999;
+  }
+  .navigation.navigation--open{ transform:translateY(0); }
+}
+
+/* ========== СТРЕЛКА-УКАЗАТЕЛЬ (mobile) ========== */
+@media (max-width:768px){
+
+  .scroll-down{
+    display:inline-flex;   
+    position:relative;
+    width:36px; height:44px;          /* ↑ чуть выше, чтобы влез длинный "хвост" */
+    margin-left:14px;
+    background:transparent;
+    border:none; outline:none;
+    cursor:pointer;
+    animation:arrowFlash 2.2s infinite;
+  }
+
+  /* треугольник */
+  .scroll-down::before{
+    content:'';
+    position:absolute;
+    top:10px;                         /* ↓ расстояние от вершины "хвоста" */
+    left:50%;
+    border-left:10px solid transparent;
+    border-right:10px solid transparent;
+    border-top:14px solid var(--accent);
+    transform:translateX(-50%);
+  }
+
+  /* длинный "хвост" */
+  .scroll-down::after{
+    content:'';
+    position:absolute;
+    top:0;
+    left:50%;
+    width:3.5px; height:22px;         /* ← Длина хвоста */
+    background:var(--accent);
+    transform:translateX(-50%);
+    border-radius:1.75px;
+  }
+
+  @keyframes arrowFlash{
+    0%,100%{filter:drop-shadow(0 0 0 rgba(255,113,21,0));}
+    50%   {filter:drop-shadow(0 0 6px rgba(255,113,21,.7));}
+  }
 }
