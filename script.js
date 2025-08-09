@@ -204,3 +204,125 @@ const arrowBtn   = document.getElementById('scrollDown');
 
 
 });
+
+
+
+
+/*  ====== TELEGRAM FLOAT WIDGET (desktop-only, bottom-right, no memory) ====== */
+(function(){
+  const MIN_WIDTH = 1025;                         // Desktop only
+  if (window.innerWidth < MIN_WIDTH) return;
+
+  if (document.getElementById('tg-widget')) return; // не дублируем
+
+  /* ---- Укажи путь к иконке в ОДНОМ месте ---- */
+  const TG_ICON_SRC = "pictures/tglogo.png"; // <- поменяй путь при необходимости
+
+  const el = document.createElement('aside');
+  el.id = 'tg-widget';
+  el.setAttribute('aria-label', 'Реклама Telegram-канала');
+  el.setAttribute('role', 'dialog');
+  el.innerHTML = `
+    <div id="tgw-head">
+      <div id="tgw-logo" aria-hidden="true">
+        <img src="${TG_ICON_SRC}" alt="">
+      </div>
+      <div id="tgw-title">
+        <span class="t1">Наш Telegram-канал</span>
+        <span class="t2">Акции, свежие поступления, советы по ТО</span>
+      </div>
+      <button id="tgw-close" aria-label="Скрыть виджет">&times;</button>
+    </div>
+    <div id="tgw-body">
+      <a id="tgw-cta"
+         href="https://t.me/autospets88?utm_source=site&utm_medium=widget&utm_campaign=autospets"
+         target="_blank" rel="noopener noreferrer">
+        Подписаться @autospets88
+      </a>
+    </div>
+  `;
+  document.body.appendChild(el);
+
+  // показать через таймер или при скролле на 25%
+  const show = () => el.classList.add('is-visible');
+  const timer = setTimeout(show, 2500);
+
+  const onScroll = () => {
+    const sc = window.scrollY / (document.documentElement.scrollHeight - innerHeight);
+    if (sc > 0.25){
+      show();
+      window.removeEventListener('scroll', onScroll);
+      clearTimeout(timer);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive:true });
+
+  // закрытие (без запоминания)
+  el.querySelector('#tgw-close').addEventListener('click', () => el.remove());
+
+  // запасной вариант иконки ✈️
+  const logoImg = el.querySelector('#tgw-logo img');
+  logoImg.addEventListener('error', () => {
+    el.querySelector('#tgw-logo').textContent = '✈️';
+  });
+})();
+
+
+
+(function () {
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const widget = document.getElementById('mobile-tg-widget');
+  if (!widget) return;
+
+  // Если не мобильная версия — удаляем виджет из DOM
+  if (!isMobile) { widget.remove(); return; }
+
+  const CLOSE_KEY = 'mobile_tg_closed_at';
+  const DAY = 24 * 60 * 60 * 1000;
+
+  // Проверяем, не закрывали ли виджет в последние сутки
+  const lastClose = Number(localStorage.getItem(CLOSE_KEY) || 0);
+  if (Date.now() - lastClose < DAY) return;
+
+  // Функция показа
+  const showWidget = () => {
+    widget.classList.add('show');
+  };
+
+  // Функция скрытия
+  const hideWidget = () => {
+    widget.classList.remove('show');
+    localStorage.setItem(CLOSE_KEY, String(Date.now()));
+  };
+
+  // Показ через 2.5 сек с шансом 33%
+  if (Math.random() < 0.33) {
+    setTimeout(showWidget, 2500);
+  }
+
+  // Показ при скролле на 25% страницы с шансом 33%
+  const onScroll = () => {
+    const scrolledPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+    if (scrolledPercent > 0.25) {
+      if (Math.random() < 0.33) {
+        showWidget();
+      }
+      window.removeEventListener('scroll', onScroll);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Закрытие по кнопке
+  const closeBtn = document.getElementById('mobile-tg-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', hideWidget);
+  }
+
+  // Подстраховка: если картинка не загрузится — показываем эмодзи ✈️
+  const icon = widget.querySelector('.mobile-tg-icon img');
+  if (icon) {
+    icon.addEventListener('error', () => {
+      icon.replaceWith(document.createTextNode('✈️'));
+    });
+  }
+})();

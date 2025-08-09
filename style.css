@@ -208,6 +208,30 @@ h1, h2, h3 {
   filter: brightness(20%); /* было 40 */
 }
 
+
+
+/* Читаемость текста в карусели */
+.carousel .overlay h2,
+.carousel .overlay p {
+  text-shadow: 0 3px 8px rgba(0,0,0,.9), 0 0 1px rgba(0,0,0,.85);
+}
+
+/* Тень для кнопки в карусели — без тени для текста */
+.carousel .overlay .orange-btn {
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.55),
+    0 6px 16px rgba(255,113,21,.35);
+}
+
+.carousel .overlay .orange-btn:hover {
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.65),
+    0 8px 20px rgba(255,113,21,.4);
+}
+
+
+
+
 .overlay {
   position: absolute;
   top: 0;
@@ -342,7 +366,7 @@ h1, h2, h3 {
 /* --- SECTION BLOCKS --- */
 .section {
   background: var(--white);
-  padding: 60px 20px;
+  padding: 80px 20px;
   opacity: 0;
   transform: translateY(40px);
   transition: all 0.8s ease;
@@ -365,6 +389,11 @@ h2 {
 
 p {
   margin-bottom: 20px;
+}
+
+.service-p {
+  font-size: 1.2em;
+  font-style: normal;
 }
 
 /* --- CARDS --- */
@@ -429,6 +458,14 @@ p {
   text-align: justify;          /* растягиваем строки */
   max-width: none;              /* снимаем ограничение 700px */
 }
+
+.note {
+  text-align: center;  /* по центру */
+  font-size: 1.1rem;   /* размер шрифта */
+  font-weight: 600;    /* жирность */
+  margin: 20px 0;      /* отступы сверху и снизу */
+}
+
 
 /* кнопка внутри секции */
 .parts-btn { margin-top: 10px; }
@@ -556,94 +593,11 @@ p {
 
 .scroll-down{ display:none; }
 
-/* ====================== МОБИЛЬНАЯ ВЕРСИЯ ====================== */
 @media (max-width: 768px) {
 
-  .hero-flex {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    text-align: center;
-  }
-
-  .logo,
-  .enlarged-logo {
-    width: 100px;
-  }
-
-  .hero-text p {
-    font-size: 1em;
-    padding: 0 10px;
-  }
-
-  .cta-btn.hero-btn {
-    margin: 10px auto 0;
-    font-size: 1em;
-    padding: 12px 24px;
-    width: auto;
-  }
-
-  .navigation a {
-    display: block;
-    margin: 12px auto; /* увеличен отступ между элементами */
-    width: 65%;        /* уменьшили ширину кнопки */
-    font-size: 1em;
-    padding: 14px 20px;
-    border-width: 2px;
-    max-width: 260px;
-  }
-
-
-  .carousel-text h2 {
-    font-size: 1.5em;
-  }
-
-  .carousel-text p {
-    font-size: 1em;
-  }
-
-  .carousel-text {
-    padding: 10px;
-  }
-
-  .prev,
-  .next {
-    display: none;
-  }
-
-  .card-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .card {
-    width: 90%;
-    min-width: unset;
-  }
-
-  .contact-flex {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .qr-code img {
-    width: 140px;
-    height: 140px;
-  }
-
-  .brand-grid {
-    gap: 8px;
-  }
-
-  .brand {
-    font-size: 0.9em;
-    padding: 8px 16px;
-  }
-
-  .dot {
-    width: 12px;
-    height: 12px;
-    margin: 0 4px;
+  /* ==== Базовые правки ==== */
+  body {
+    overflow-x: hidden;
   }
 
   h2 {
@@ -655,145 +609,491 @@ p {
   }
 
   a {
-  -webkit-tap-highlight-color: transparent;
-}
+    -webkit-tap-highlight-color: transparent;
+  }
 
+  /* ==== Hero-блок ==== */
+  .hero-flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
 
+  .logo, .enlarged-logo {
+    width: 100px;
+    height: auto;
+  }
 
-  .parts-flex   { flex-direction: column; }
-  .parts-cards  { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-  .part-card{
+  .hero-text p {
+    font-size: 1em;
+    padding: 0 10px;
+  }
+
+  .cta-btn.hero-btn {
+    margin: 10px auto 20px;
+    font-size: 1em;
+    padding: 12px 24px;
+    width: auto;
+  }
+
+  /* ==== Навигация ==== */
+  .navigation a {
+    display: block;
+    margin: 12px auto;
+    width: 65%;
+    max-width: 260px;
+    font-size: 1em;
+    padding: 14px 20px;
+    border-width: 2px;
+  }
+
+  /* ==== Карусель ==== */
+  .carousel-text {
+    padding: 10px;
+  }
+  .carousel-text h2 {
+    font-size: 1.5em;
+  }
+  .carousel-text p {
+    font-size: 1em;
+  }
+  .prev, .next {
+    display: none;
+  }
+
+  /* ==== Карточки ==== */
+  .card-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    width: 90%;
+    min-width: unset;
+  }
+
+  /* ==== Контакты ==== */
+  .contact-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+  .qr-code img {
+    width: 140px;
+    height: 140px;
+  }
+  .contact-text p {
+    margin-bottom: 12px;
+    font-size: 1em;
+  }
+
+  /* ==== Сетка брендов ==== */
+  .brand-grid {
+    gap: 8px;
+    justify-content: center;
+  }
+  .brand {
+    font-size: 0.9em;
+    padding: 8px 16px;
+  }
+
+  /* ==== Секция запчастей ==== */
+  .parts-flex {
+    flex-direction: column;
+  }
+  .parts-cards {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+  .part-card {
     flex-basis: 100%;
     max-width: 100%;
   }
-  .parts-btn{
+  .parts-btn {
     display: inline-block;
-    margin: 20px auto;          /* ➜ по центру */
-    margin-top:2rem;
-  }
-  .parts-section .parts-btn{
-    margin:20px auto;                  /* чуть меньше вертикальный отступ */
+    margin: 20px auto;
   }
 
+  /* ==== Липкая панель + бургер ==== */
+  .sticky-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 66px;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    transform: translateY(-100%);
+    transition: transform .25s;
+    z-index: 1000;
+  }
+  .sticky-bar--visible {
+    transform: translateY(0);
+  }
+  .sticky-bar img {
+    width: 90px;
+    height: auto;
+  }
+  .burger {
+    width: 28px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .burger span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform .3s, opacity .3s;
+  }
+  .burger--active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .burger--active span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger--active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+  .navigation {
+    position: fixed;
+    top: 66px; /* подгоняем под .sticky-bar */
+    left: 0;
+    width: 100%;
+    background: var(--dark);
+    transform: translateY(-110%);
+    transition: transform .3s;
+    z-index: 999;
+  }
+  .navigation.navigation--open {
+    transform: translateY(0);
+  }
 
+  /* ==== Стрелка-указатель ==== */
+  .scroll-down {
+    display: inline-flex;
+    position: relative;
+    width: 36px;
+    height: 44px;
+    margin-left: 14px;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    animation: arrowFlash 2.2s infinite, arrowMove 1.6s infinite;
+  }
+  .scroll-down::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 14px solid var(--accent);
+    transform: translateX(-50%);
+  }
+  .scroll-down::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 3.5px;
+    height: 22px;
+    background: var(--accent);
+    transform: translateX(-50%);
+    border-radius: 1.75px;
+  }
+  @keyframes arrowFlash {
+    0%,100% { filter: drop-shadow(0 0 0 rgba(255,113,21,0)); }
+    50% { filter: drop-shadow(0 0 6px rgba(255,113,21,.7)); }
+  }
+  @keyframes arrowMove {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(12px); }
+  }
 
-.contact-text p {
-  margin-bottom: 12px;
-  font-size: 1em;
 }
 
+
+/* ================== АНДРОИД ОПТИМИЗАЦИЯ ================== */
+/* Высокая плотность пикселей + ширина до 768px */
+@media (max-width: 768px) and (pointer: coarse) and (min-resolution: 2dppx) {
+
+  /* Чуть больше кегль шрифта для читаемости на AMOLED */
+  body {
+    font-size: 1.05em;
+    -webkit-text-size-adjust: none; /* предотвращает авто-увеличение */
+  }
+
+  /* Увеличим кликабельную зону кнопок */
+  .cta-btn,
+  .orange-btn,
+  .navigation a {
+    padding: 14px 26px;
+    min-height: 48px; /* Google рекомендует 48px для тач-таргета */
+  }
+
+  /* Лёгкое увеличение контраста текста */
+  .carousel-text h2,
+  .carousel-text p {
+    text-shadow: 0 3px 10px rgba(0,0,0,.9);
+  }
+
+  /* Подгон под вытянутые экраны (20:9) */
+  .hero-flex {
+    gap: 16px;
+  }
+
+  /* Чуть меньше отступов внизу секций, чтобы экономить вертикаль */
+  .container {
+    padding-bottom: 15px;
+  }
+
+  /* Исправление залипания адресной строки в Chrome Android */
+  html, body {
+    height: 100%;
+    min-height: 100%;
+  }
+
+  /* Больше отступ у липкой панели, чтобы не мешала жестам */
+  .sticky-bar {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* Немного увеличим интерактивные иконки */
+  .burger {
+    width: 32px;
+    height: 26px;
+  }
+
+  .burger span {
+    height: 3.5px;
+  }
+
 }
 
 
 
 
-/*────────  МОБИЛЬНАЯ ЛИПКАЯ ПАНЕЛЬ + БУРГЕР ────────*/
-@media (max-width:768px){
 
+/* ========== ПЛАНШЕТ  (769-1024 px)  ========== */
+@media (min-width:769px) and (max-width:1024px){
 
-  #service h2{           /* или #service { … }  — как во 2-м варианте */
-    margin-top: 50px;
+  /* 1) Шапка: логотип чуть крупнее, текст компактнее */
+  .logo, .enlarged-logo{ width:140px; }
+  .hero-text p{ font-size:1.05em; }
+
+  /* 2) Навигация: кнопки в две строки, но уже, чем на десктопе */
+  .navigation a{
+    margin:6px 12px;
+    padding:10px 22px;
+    font-size:1em;
   }
 
-  .cta-btn.hero-btn{
-      margin: 10px auto 20px;
-  }
+  /* 3) Слайдер: высота 480 px, крупнее шрифт */
+  .carousel{ max-height:480px; }
+  .slide{ height:480px; }
+  .carousel-text h2{ font-size:2.3em; }
+  .carousel-text p { font-size:1.25em; }
 
-  /* сам «бар» */
-  .sticky-bar{
-    position:fixed; top:0; left:0;
-    width:100%; height:66px;
-    background:var(--dark);
-    display:flex; align-items:center;
-    justify-content:space-between;
-    padding:0 16px;
-    transform:translateY(-100%);
-    transition:transform .25s;
-    z-index:1000;
-  }
-  .sticky-bar--visible{ transform:translateY(0); }
+  /* 4) Карточки ТО: две в ряд */
+  .card{ flex:1 1 calc(50% - 20px); }
+  .card img{ height:200px; }
 
-  /* логотип внутри */
-  .sticky-bar img{ width:90px; height:auto; }
+  /* 5) Сетка part-cards: 2-3 в ряд, центровка сохранена */
+  .parts-cards{ grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); }
 
-  /* бургер-кнопка */
-  .burger{ width:28px; height:22px; display:flex;
-           flex-direction:column; justify-content:space-between;
-           cursor:pointer; }
-  .burger span{ display:block; width:100%; height:3px;
-                background:#fff; border-radius:2px;
-                transition:transform .3s,opacity .3s; }
-
-  /* анимация креста */
-  .burger--active span:nth-child(1){
-      transform:translateY(9px) rotate(45deg);}
-  .burger--active span:nth-child(2){ opacity:0; }
-  .burger--active span:nth-child(3){
-      transform:translateY(-9px) rotate(-45deg);}
-
-  /* выпадающее меню навигации */
-  .navigation{
-      position:fixed; top:56px; left:0; width:100%;
-      background:var(--dark);
-      transform:translateY(-110%);
-      transition:transform .3s;
-      z-index:999;
-  }
-  .navigation.navigation--open{ transform:translateY(0); }
+  /* 6) Контакты: текст 1.1 em, картинка 160 px */
+  .contact-text p{ font-size:1.1em; }
+  .qr-code img{ width:160px; height:160px; }
 }
 
 
 
 
-/* ========== СТРЕЛКА-УКАЗАТЕЛЬ (mobile) ========== */
-@media (max-width:768px){
 
-  .scroll-down{
-    display:inline-flex;
-    position:relative;
-    width:36px; height:44px;
-    margin-left:14px;
-    background:transparent;
-    border:none; outline:none;
-    cursor:pointer;
 
-    /* ▼ две анимации одновременно */
-    animation: arrowFlash 2.2s infinite,   /* свечение */
-              arrowMove  1.6s infinite;    /* вертикальный ход */
-  }
-
-  /* треугольник */
-  .scroll-down::before{
-    content:'';
-    position:absolute;
-    top:10px; left:50%;
-    border-left:10px solid transparent;
-    border-right:10px solid transparent;
-    border-top:14px solid var(--accent);
-    transform:translateX(-50%);
-  }
-
-  /* длинный "хвост" */
-  .scroll-down::after{
-    content:'';
-    position:absolute;
-    top:0; left:50%;
-    width:3.5px; height:22px;
-    background:var(--accent);
-    transform:translateX(-50%);
-    border-radius:1.75px;
-  }
-
-  /* свечение */
-  @keyframes arrowFlash{
-    0%,100%{ filter:drop-shadow(0 0 0 rgba(255,113,21,0)); }
-    50%    { filter:drop-shadow(0 0 6px rgba(255,113,21,.7)); }
-  }
-
-  /* лёгкое движение вверх-вниз */
-  @keyframes arrowMove{
-    0%,100%{ transform:translateY(0); }
-    50%    { transform:translateY(12px); }  /* глубина хода — 6 px */
-  }
+/* ========== TELEGRAM WIDGET (desktop-only, bottom-right) ========== */
+:root{
+  --radius: 14px;
+  --shadow: 0 16px 40px rgba(0,0,0,.18);
+  --shadow-strong: drop-shadow(0 10px 24px rgba(0,0,0,.18));
 }
 
+@keyframes tg-pop-in {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+@keyframes tg-cta-bounce {
+  0%,100% { transform: translateY(0) }
+  50%     { transform: translateY(-4px) }
+}
+
+#tg-widget{
+  position: fixed;
+  right: calc(16px + env(safe-area-inset-right, 0));
+  bottom: calc(16px + env(safe-area-inset-bottom, 0));
+  width: 340px; /* шире */
+  max-width: calc(100vw - 32px);
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: var(--radius);
+  /* двойная тень: box-shadow + drop-shadow для «отдачи» на фон */
+  box-shadow: var(--shadow);
+  filter: var(--shadow-strong);
+  overflow: clip;
+  color: #1a1a1a;
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  z-index: 1001;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;            /* кликабельно только когда видно */
+}
+
+#tg-widget.is-visible{
+  animation: tg-pop-in .45s ease-out both;
+  pointer-events: auto;
+}
+
+#tgw-head{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px 4px 14px; /* меньше отступы (компактнее высота) */
+}
+
+#tgw-logo{
+  width: 34px; height: 34px; border-radius: 10px;
+  background: #F0F6FF;
+  display: grid; place-items: center;
+  flex: 0 0 34px;
+}
+#tgw-logo img{ width: 20px; height: 20px; display:block; }
+
+#tgw-title{ line-height: 1.2; }
+#tgw-title .t1{ font-weight: 700; font-size: 1rem; }
+#tgw-title .t2{ color: #666; font-size: .92rem; margin-top: 2px; display:block; }
+
+#tgw-close{
+  margin-left: auto;
+  background: transparent;
+  border: 0;
+  font-size: 20px;
+  line-height: 1;
+  color: #999;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+#tgw-close:hover{ background: #f2f2f2; color: #666; }
+
+#tgw-body{ padding: 6px 14px 12px; }
+
+#tgw-cta{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 9px 14px; /* чуть меньше по высоте */
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.94rem; /* компактнее шрифт */
+  animation: tg-cta-bounce 2.2s infinite;
+  box-shadow: 0 6px 16px rgba(255,113,21,.35);
+}
+#tgw-cta:hover{ filter: brightness(.95); }
+
+/* только десктоп */
+@media (max-width: 1024px){
+  #tg-widget{ display:none !important; }
+}
+
+/* уважение к reduced motion */
+@media (prefers-reduced-motion: reduce){
+  #tg-widget, #tg-widget.is-visible{
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  #tgw-cta{ animation: none !important; }
+}
+
+
+/* === Mobile TG widget: глобально скрыть === */
+#mobile-tg-widget{ display:none !important; }
+
+/* Когда модалка открыта — фиксируем фон страницы */
+body.no-scroll{
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* === Mobile TG widget: стили только для мобилок === */
+@media (max-width: 768px){
+  #mobile-tg-widget{
+    position: fixed;
+    inset: 0;
+    display: none;                  /* по умолчанию скрыт */
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,.45);    /* затемнение фона */
+    z-index: 2147483647;            /* поверх всего */
+    padding:
+      max(12px, env(safe-area-inset-top))
+      max(12px, env(safe-area-inset-right))
+      max(12px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
+  }
+  #mobile-tg-widget.show{           /* показать модалку */
+    display: flex !important;
+  }
+
+  #mobile-tg-widget .mobile-tg-content{
+    width: min(92vw, 360px);
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 18px 18px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  #mobile-tg-widget.show .mobile-tg-content{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #mobile-tg-widget #mobile-tg-close{
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 30px; height: 30px;
+    border: 0; border-radius: 50%;
+    background: rgba(0,0,0,.06);
+    color:#555; font-size:20px; line-height:30px;
+  }
+
+  .mobile-tg-icon{
+    width:64px; height:64px; border-radius:50%;
+    margin:0 auto 10px; display:flex; align-items:center; justify-content:center;
+    background:#229ED9; box-shadow:0 4px 12px rgba(34,158,217,.4);
+  }
+  .mobile-tg-icon img{ width:36px; height:36px; display:block; }
+
+  .mobile-tg-title{ font-size:1.2rem; font-weight:700; text-align:center; margin-bottom:4px; }
+  .mobile-tg-sub{ font-size:.95rem; color:#555; text-align:center; margin-bottom:14px; }
+
+  .mobile-tg-btn{
+    display:inline-block; background:var(--accent,#FF7115); color:#fff;
+    text-decoration:none; font-weight:700; font-size:1rem;
+    padding:12px 18px; border-radius:10px;
+    box-shadow:0 6px 16px rgba(255,113,21,.35);
+  }
+}
